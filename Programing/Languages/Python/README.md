@@ -6,12 +6,30 @@ Guido van Rossum 在 20 世纪 80 年代后期开始开发 Python，于 1991 年
 
 ## 安装
 
-<https://docs.python.org/zh-cn/3.14/using/windows.html>
+### Windows
+
+现在推荐在 Windows 上使用 Python 安装管理器（Python install manager）
+
+从 [Microsoft Store](https://apps.microsoft.com/detail/9nq7512cxl7t) 或 [python.org/downloads](https://www.python.org/downloads/) 获取
+
+**参考文献** <https://docs.python.org/zh-cn/3.14/using/windows.html>
+
+这是一个独立的工具，它使 Python 可以作为 Windows 机器上的全局命令使用，与系统集成，并支持随时间更新，推荐为每个项目创建一个虚拟环境来使用。
 
 ## Hello World
 
 ```python
 print("Hello World!")
+```
+
+## 注释
+
+```python
+# 单行注释
+
+"""
+多行注释 单双引号均可
+"""
 ```
 
 ## 变量
@@ -34,12 +52,67 @@ PI = 3.1415926535
 
 ## 数据类型
 
-整数 `int`
-浮点数 `float`
-布尔 `bool`
-字符串 `str`
-对象 `object`
-空值 `None`
+整数 `int`  
+浮点数 `float`  
+布尔 `bool`  
+字符串 `str`  
+列表 `list`  
+元组 `tuple`  
+字典 `dict`  
+对象 `object`  
+空值 `None`  
+
+## 运算符与优先级
+
+**参考文献** <https://docs.python.org/zh-cn/3.14/reference/expressions.html#operator-precedence>
+
+| 运算符                                                           | 描述                                                 |
+| ---------------------------------------------------------------- | ---------------------------------------------------- |
+| `(expr...)`, `[expr...]`, `{key: value...}`, `{expr...}`         | 绑定或加圆括号的表达式，列表显示，字典显示，集合显示 |
+| `x[index]`, `x[index:index]`, `x(args...)`, `x.attr`             | 抽取，切片，调用，属性引用                           |
+| `await x`                                                        | await 表达式                                         |
+| `**`                                                             | 乘方                                                 |
+| `+x`, `-x`, `~x`                                                 | 正，负，按位非 NOT                                   |
+| `*`, `@`, `/`, `//`, `%`                                         | 乘，矩阵乘，除，整除，取余                           |
+| `+`, `-`                                                         | 加和减                                               |
+| `<<`, `>>`                                                       | 移位                                                 |
+| `&`                                                              | 按位与 AND                                           |
+| `^`                                                              | 按位异或 XOR                                         |
+| `\|`                                                             | 按位或 OR                                            |
+| `in`, `not in`, `is`, `is not`, `<`, `<=`, `>`, `>=`, `!=`, `==` | 比较运算，包括成员检测和标识号检测                   |
+| `not x`                                                          | 布尔逻辑非 NOT                                       |
+| `and`                                                            | 布尔逻辑与 AND                                       |
+| `or`                                                             | 布尔逻辑或 OR                                        |
+| `if ... ... else ...`                                            | 条件表达式                                           |
+| `lambda`                                                         | lambda 表达式                                        |
+| `:=`                                                             | 赋值表达式                                           |
+
+### 赋值表达式（海象运算符）
+
+**Python 3.8 新增** <https://docs.python.org/zh-cn/3.14/whatsnew/3.8.html#assignment-expressions>
+
+`:=` 可在表达式内部为变量赋值。它被昵称为“海象运算符”因为它很像是 海象的眼睛和长牙。
+
+```python
+if (n := len(a)) > 10:
+    print(f"List is too long ({n} elements, expected <= 10)")
+```
+
+```python
+discount = 0.0
+if (mo := re.search(r'(\d+)% discount', advertisement)):
+    discount = float(mo.group(1)) / 100.0
+```
+
+```python
+while (block := f.read(256)) != '':
+    process(block)
+```
+
+```python
+[clean_name.title() for name in names
+ if (clean_name := normalize('NFC', name)) in allowed_names]
+```
 
 ## 基本输入输出
 
@@ -130,23 +203,11 @@ for n in range(2, 10):
         print(n, 'is a prime number')
 ```
 
-### pass
-
-`pass` 语句什么都不做，一般用于占位。
-
-```python
-while True:
-    pass
-
-def function(args):
-    pass
-```
-
 ### match 模式匹配
 
-python 3.10 新增语法
+**python 3.10 新增** <https://docs.python.org/zh-cn/3.14/tutorial/controlflow.html#match-statements>
 
-`match` 语句接受一个表达式并把它的值与一个或多个 `case` 块给出的一系列模式进行比较。这表面上像其他程序语言中的 switch 语句，但其实它更像 Rust 或 Haskell 中的模式匹配。只有第一个匹配的模式会被执行，并且它还可以提取值的组成部分（序列的元素或对象的属性）赋给变量。如果没有匹配的case，则不执行任何分支。
+`match` 语句接受一个表达式并把它的值与一个或多个 `case` 块给出的一系列模式进行比较，只有第一个匹配的模式会被执行，并且它还可以提取值的组成部分（序列的元素或对象的属性）赋给变量。如果没有匹配的case，则不执行任何分支。
 
 ```python
 def http_error(status):
