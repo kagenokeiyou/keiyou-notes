@@ -481,6 +481,9 @@ f(2)
 
 ## 类型注解
 
+> [!WARNING]
+> 未完成
+
 ## 基本输入输出
 
 以下为 `print()` 与 `input()` 的函数签名
@@ -508,6 +511,9 @@ def input(prompt: object = "", /) -> str: ...
 ```
 
 ## 字符串 `str`
+
+> [!WARNING]
+> 未完成
 
 Python 中的字符串字面量使用单双引号均可
 
@@ -561,35 +567,17 @@ world
 
 ## 列表 `list`
 
+> [!WARNING]
+> 未完成
+
 ```python
 l = [1, 2, 3]
 ```
 
-list 是一种有序的集合，可以随时添加和删除其中的元素。
-
-`list.append(x)` 在列表末尾添加一项。
-
-`list.extend(iterable)` 通过添加来自 `iterable` 的所有项来扩展列表。
-
-`list.insert(i, x)` 在指定位置插入元素。第一个参数是插入元素的索引，因此，`a.insert(0, x)` 在列表开头插入元素， `a.insert(len(a), x)` 等同于 `a.append(x)`。
-
-`list.remove(x)` 从列表中删除第一个值为 `x` 的元素。未找到指定元素时，触发 `ValueError` 异常。
-
-`list.pop([i])` 移除列表中给定位置上的条目，并返回该条目。如果未指定索引号，则 `a.pop()` 将移除并返回列表中的最后一个条目。如果列表为空或索引号在列表索引范围之外则会引发 `IndexError`。
-
-`list.clear()` 移除列表中的所有项。
-
-`list.index(x[, start[, end]])` 返回列表中 `x` 首次出现位置的从零开始的索引。 如无此条目则会引发 `ValueError`。可选参数 `start` 和 `end` 是切片符号，用于将搜索限制为列表的特定子序列。返回的索引是相对于整个序列的开始计算的，而不是 `start` 参数。
-
-`list.count(x)` 返回列表中元素 `x` 出现的次数。
-
-`list.sort(*, key=None, reverse=False)` 就地排序列表中的元素（要了解自定义排序参数，详见 `sorted()`）。
-
-`list.reverse()` 翻转列表中的元素。
-
-`list.copy()` 返回列表的浅拷贝。
-
 ## 元组 `tuple`
+
+> [!WARNING]
+> 未完成
 
 `tuple` 一旦初始化就不能修改
 
@@ -599,7 +587,13 @@ t = (1, 2, 3)
 
 ## 集合 `set`
 
+> [!WARNING]
+> 未完成
+
 ## 字典 `dict`
+
+> [!WARNING]
+> 未完成
 
 ## 推导式
 
@@ -625,6 +619,9 @@ for x in range(10):
 ```
 
 ## 模块和包
+
+> [!WARNING]
+> 未完成，需要改进
 
 为了方便维护，最好把脚本拆分成多个文件，在 Python 中，一个 Python 文件就是一个模块。
 
@@ -780,10 +777,5 @@ except Exception as e:
 
 ## 类
 
-```python
-class MyClass:
-    def __init__(self, name):
-        self.name = name
-
-my_class = MyClass('my_class')
-```
+> [!WARNING]
+> 未完成
