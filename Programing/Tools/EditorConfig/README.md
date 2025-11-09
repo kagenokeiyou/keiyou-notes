@@ -29,15 +29,22 @@ root = true
 
 [*]
 charset = utf-8
-indent_style = space
 indent_size = 4
-end_of_line = lf
-trim_trailing_whitespace = true
+indent_style = space
 insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+max_line_length = 100
 
-[*.{html,js,ts,vue}]
+[*.{html,vue}]
 indent_size = 2
 
-[*.{json,yml,yaml}]
+[*.{css,scss,sass,less,styl}]
+indent_size = 2
+
+[*.{js,jsx,ts,tsx,cjs,mjs,cts,mts}]
+indent_size = 2
+
+[*.{json}]
 indent_size = 2
 ```
