@@ -620,6 +620,8 @@ for x in range(10):
 
 ## 文件操作
 
+### `open()` 函数
+
 ```python
 def open(
     file: FileDescriptorOrPath,
@@ -630,7 +632,7 @@ def open(
     newline: str | None = None,
     closefd: bool = True,
     opener: _Opener | None = None
-) -> IO[Any]
+) -> TextIOWrapper | FileIO | BufferedRandom | BufferedWriter | BufferedReader | BinaryIO | IO[Any]
 ```
 
 打开 `file` 并返回对应的文件对象。如果该文件不能被打开，则引发 `OSError`。
@@ -678,6 +680,58 @@ def open(
     - 若为任何其他合法值，则写入的任何 '\n' 字符将被转换为给定的字符串。
 - `closefd` 若为 `False` 且给出的不是文件名而是文件描述符，那么当文件关闭时，底层文件描述符将保持打开状态。如果给出的是文件名，则必须为 `True`，否则将触发错误。
 - `opener` 传递可调用的 `opener(file, flags)` 来获得文件对象的基础文件描述符。
+
+不再使用文件时，应调用文件对象的 `close()` 方法关闭文件
+
+```python
+f = open("test.txt", "w")
+f.write("hello world")
+f.close()
+```
+
+使用 `with` 语句（用于上下文管理器）可以自动关闭文件
+
+```python
+with open("test.txt", "w") as f:
+    f.write("hello world")
+```
+
+### `shutil` 模块
+
+> [!NOTE]
+> 有关 `shutil` 模块的详细内容，请参考 [官方文档](https://docs.python.org/zh-cn/3/library/shutil.html)
+
+`shutil` 模块提供了一系列对文件和文件集合的高阶操作，特别是提供了一些支持文件拷贝和删除的函数。
+
+```python
+def copyfileobj(
+    fsrc: SupportsRead,
+    fdst: SupportsWrite,
+    length: int = 0
+) -> None
+```
+
+将文件对象 `fsrc` 的内容拷贝到文件对象 `fdst`，`length` 为缓冲区大小。如果 `length` 为负值表示拷贝数据时不对源数据进行分块循环处理；在默认情况下会分块读取数据以避免不受控制的内存消耗。注意：如果 `fsrc` 对象的当前文件位置不为 0，只有从当前文件位置到文件末尾的内容会被拷贝。
+
+`copyfileobj()` 不保证目标流在拷贝完成时已被刷新。如果希望在复制操作完成时从目标文件读取，则必须确保在尝试读取目标文件之前在文件对象上调用了 `flush()` 或 `close()`。
+
+```python
+def copyfile(
+    src: StrOrBytesPath,
+    dst: _StrOrBytesPathT,
+    *,
+    follow_symlinks: bool = True
+) -> _StrOrBytesPathT
+```
+
+将 `src` 路径的文件的内容（不带元数据）拷贝到 `dst` 路径的文件并以尽可能高效的方式返回 `dst`。
+
+`dst` 必须是完整的目标文件名，对于接受目标目录路径的拷贝请参见 `copy()`。 如果 `src` 和 `dst` 指定了同一个文件，则将引发 `SameFileError`。`dst` 必须是可写的，否则将引发 `OSError`。如果 `dst` 已经存在，它将被替换。
+
+如果 `follow_symlinks` 为假值且 `src` 为符号链接，则将创建一个新的符号链接而不是拷贝 `src` 所指向的文件。
+
+> [!NOTE]
+> 从 Python 3.8 开始，涉及文件拷贝的函数（`copyfile()`, `copy()`, `copy2()`, `copytree()`, `move()`）将会使用平台特定的系统调用以便更高效地拷贝文件。这意味着拷贝操作将发生于系统内核之中，不使用 Python 用户空间的缓冲区。如果使用系统调用失败并且没有数据被写入目标文件，则 `shutil` 将在内部静默地回退到使用效率较低的 `copyfileobj()` 函数。
 
 ## 模块和包
 
